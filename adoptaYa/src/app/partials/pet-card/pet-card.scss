@@ -1,0 +1,43 @@
+.pet-card-image {
+  height: 220px;
+  object-fit: cover;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.hover-card {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              box-shadow 0.3s ease;
+  border-radius: 1rem;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+// Gradientes de Figma para los Badges
+.badge-size-small {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.badge-size-medium {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.badge-size-large {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+// Estilo para el botón primario que combine con el diseño
+.btn-primary {
+  border-radius: 0.75rem;
+  padding: 0.6rem;
+  font-weight: 600;
+  border: none;
+  background-color: #7ed9a2; // Verde AdoptaYA
+
+  &:hover {
+    background-color: #6bc68f;
+  }
+}

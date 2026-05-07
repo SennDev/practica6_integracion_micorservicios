@@ -1,0 +1,67 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    depends_on:
+      - pets-service
+      - applications-service
+      - adoption-contact-service
+    ports:
+      - "4306:80"
+
+  pets-service:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    working_dir: /app
+    command: ["node", "services/pets-service.js"]
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/adoptaya_microservices
+      PORT: "3000"
+    depends_on:
+      - db
+    ports:
+      - "4450:3000"
+
+  applications-service:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    working_dir: /app
+    command: ["node", "services/applications-service.js"]
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/adoptaya_microservices
+      PORT: "3000"
+    depends_on:
+      - db
+    ports:
+      - "4451:3000"
+
+  adoption-contact-service:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    working_dir: /app
+    command: ["node", "services/adoption-contact-service.js"]
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/adoptaya_microservices
+      PORT: "3000"
+    depends_on:
+      - db
+    ports:
+      - "4452:3000"
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: adoptaya_microservices
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5406:5432"
+    volumes:
+      - adoptaya_db_data:/var/lib/postgresql/data
+
+volumes:
+  adoptaya_db_data:

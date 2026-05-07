@@ -1,0 +1,126 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="text-center mb-5 hero-contact p-4 rounded-4 shadow-sm text-white">
+        <i class="bi bi-envelope-paper-heart display-1"></i>
+        <h1 class="mt-3 fw-bold">Contáctanos</h1>
+        <p class="lead">¿Tienes preguntas? Estamos aquí para ayudarte</p>
+      </div>
+
+      @if (showSuccess) {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm border-0" role="alert">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          <strong>¡Mensaje enviado!</strong> Nos pondremos en contacto contigo pronto.
+          <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
+        </div>
+      }
+
+      <div class="row g-4 mb-5">
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm text-center info-card">
+            <div class="card-body">
+              <i class="bi bi-geo-alt-fill fs-1 text-primary mb-2"></i>
+              <h5 class="fw-bold">Ubicación</h5>
+              <p class="text-muted small">Calle Ejemplo 123, Puebla, México</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm text-center info-card">
+            <div class="card-body">
+              <i class="bi bi-telephone-fill fs-1 text-primary mb-2"></i>
+              <h5 class="fw-bold">Teléfono</h5>
+              <p class="text-muted small">+1 (234) 567-8900<br>9AM - 6PM</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm text-center info-card">
+            <div class="card-body">
+              <i class="bi bi-envelope-at-fill fs-1 text-primary mb-2"></i>
+              <h5 class="fw-bold">Email</h5>
+              <p class="text-muted small">info@adoptaya.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-5">
+        <div class="card-body p-4 p-md-5">
+          <h4 class="fw-bold mb-4 text-primary">
+            <i class="bi bi-chat-left-dots-fill me-2"></i>Envíanos un Mensaje
+          </h4>
+
+          <form (ngSubmit)="handleSubmit()" #contactForm="ngForm">
+            <div class="mb-4">
+              <label class="form-label fw-bold small text-muted">NOMBRE COMPLETO *</label>
+              <input type="text" class="form-control form-control-lg bg-light border-0 rounded-3"
+                     name="name" [(ngModel)]="formData.name" required placeholder="Tu nombre">
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold small text-muted">CORREO ELECTRÓNICO *</label>
+              <input type="email" class="form-control form-control-lg bg-light border-0 rounded-3"
+                     name="email" [(ngModel)]="formData.email" required placeholder="tu@email.com">
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold small text-muted">MENSAJE *</label>
+              <textarea class="form-control bg-light border-0 rounded-3"
+                        name="message" [(ngModel)]="formData.message" rows="5" required
+                        placeholder="¿Cómo podemos ayudarte?"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold py-3 shadow"
+                    [disabled]="isSubmitting || !contactForm.valid">
+              @if (isSubmitting) {
+                <span class="spinner-border spinner-border-sm me-2"></span>Enviando...
+              } @else {
+                <i class="bi bi-send-fill me-2"></i>Enviar Mensaje
+              }
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <h4 class="fw-bold mb-4"><i class="bi bi-question-circle-fill me-2 text-primary"></i>Preguntas Frecuentes</h4>
+        <div class="accordion accordion-flush shadow-sm rounded-4 overflow-hidden" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#f1">
+                ¿Cuál es el proceso de adopción?
+              </button>
+            </h2>
+            <div id="f1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted">
+                Postulación → Revisión (2-3 días) → Entrevista → Entrega en hogar.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#f2">
+                ¿Hay algún costo de adopción?
+              </button>
+            </h2>
+            <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted">
+                Cubre vacunación, esterilización y microchip. El costo varía según la especie.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <p class="fw-bold text-muted small mb-3">SÍGUENOS EN REDES SOCIALES</p>
+        <div class="d-flex justify-content-center gap-3">
+          <a href="#" class="social-btn facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="social-btn instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="social-btn whatsapp"><i class="bi bi-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

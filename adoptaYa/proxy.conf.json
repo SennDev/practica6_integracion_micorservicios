@@ -1,0 +1,17 @@
+{
+  "/api/pets": {
+    "target": "http://localhost:4450",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api/applications": {
+    "target": "http://localhost:4451",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api/contact": {
+    "target": "http://localhost:4452",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

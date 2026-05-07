@@ -1,0 +1,46 @@
+.navbar {
+  transition: box-shadow 0.3s ease-in-out;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.navbar:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #6ABF7E 0%, #FF9F66 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.6rem;
+}
+
+.nav-link {
+  transition: all 0.2s ease-in-out;
+  border-radius: 0.6rem;
+  padding: 0.5rem 1.2rem !important;
+  margin: 0 0.2rem;
+  font-weight: 500;
+  color: #555 !important;
+
+  &:hover {
+    background-color: rgba(106, 191, 126, 0.1);
+    color: #6ABF7E !important;
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    background: linear-gradient(135deg, #6ABF7E 0%, #5aaf6e 100%);
+    color: white !important;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(106, 191, 126, 0.2);
+  }
+}
+
+.navbar-brand {
+  transition: transform 0.2s ease-in-out;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.03);
+}

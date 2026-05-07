@@ -1,0 +1,37 @@
+.hero-contact {
+  background: linear-gradient(135deg, #6ABF7E 0%, #FF9F66 100%);
+}
+
+.info-card {
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.social-btn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  color: white;
+  transition: all 0.3s ease;
+  text-decoration: none;
+
+  &.facebook { background-color: #1877F2; }
+  &.instagram { background-color: #E4405F; }
+  &.whatsapp { background-color: #25D366; }
+
+  &:hover {
+    transform: scale(1.1) rotate(5deg);
+    opacity: 0.9;
+  }
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: rgba(106, 191, 126, 0.1);
+  color: #6ABF7E;
+}

@@ -1,0 +1,15 @@
+FROM node:20-alpine AS builder
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+RUN npm run build
+RUN node -e "const fs=require('fs'); const path=require('path'); const dist=path.join('/app','dist'); const dirs=fs.readdirSync(dist,{withFileTypes:true}).filter((entry)=>entry.isDirectory()).map((entry)=>entry.name); if (!dirs.length) throw new Error('No build output found'); let source=path.join(dist,dirs[0]); if (fs.existsSync(path.join(source,'browser'))) source=path.join(source,'browser'); const target=path.join('/app','static-dist'); fs.mkdirSync(target,{recursive:true}); fs.cpSync(source,target,{recursive:true});"
+
+FROM nginx:1.27-alpine
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/static-dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,19 @@
+.stats-card-dog {
+  background: linear-gradient(135deg, #6ABF7E 0%, #5aaf6e 100%);
+}
+
+.stats-card-cat {
+  background: linear-gradient(135deg, #FF9F66 0%, #FF8A47 100%);
+}
+
+.table thead th {
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #888;
+  border: none;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out;
+}
