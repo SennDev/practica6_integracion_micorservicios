@@ -1,0 +1,67 @@
+<div class="container py-5">
+  @if (cargando()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="text-muted mt-3 mb-0">Cargando detalle del curso...</p>
+    </div>
+  } @else if (error()) {
+    <div class="alert alert-danger shadow-sm">{{ error() }}</div>
+  } @else if (curso(); as cursoActual) {
+    <div class="row g-5">
+      <div class="col-lg-8">
+        <span class="badge bg-dark mb-3">{{ cursoActual.categoria }}</span>
+        <h1 class="fw-bold mb-3">{{ cursoActual.nombre }}</h1>
+        <p class="lead text-muted">{{ cursoActual.descripcion }}</p>
+
+        <h4 class="mt-5 mb-4 fw-bold">Programa del Curso</h4>
+        <div class="accordion shadow-sm" id="accordionPrograma">
+          <div class="accordion-item" *ngFor="let modulo of cursoActual.temario; let index = index">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button"
+                [class.collapsed]="index !== 0"
+                type="button"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#modulo-' + index"
+              >
+                {{ modulo.titulo }}
+              </button>
+            </h2>
+            <div
+              class="accordion-collapse collapse"
+              [class.show]="index === 0"
+              [attr.id]="'modulo-' + index"
+              data-bs-parent="#accordionPrograma"
+            >
+              <div class="accordion-body">
+                {{ modulo.descripcion }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card shadow border-0 p-4 sticky-top" style="top: 100px; z-index: 1;">
+          <h3 class="fw-bold text-primary mb-3">Inscripciones abiertas</h3>
+
+          <img [src]="cursoActual.imagenUrl" alt="Imagen del curso" class="img-fluid rounded shadow-sm mb-4">
+
+          <ul class="list-unstyled mb-4 lh-lg">
+            <li><i class="bi bi-laptop text-muted me-2"></i> Modalidad: {{ cursoActual.modalidad }}</li>
+            <li><i class="bi bi-clock text-muted me-2"></i> DuraciÃ³n: {{ cursoActual.duracion }}</li>
+            <li><i class="bi bi-bar-chart text-muted me-2"></i> Nivel: {{ cursoActual.nivel }}</li>
+          </ul>
+
+          <a
+            class="btn btn-warning btn-lg w-100 fw-bold shadow-sm"
+            [routerLink]="['/inscripciones']"
+            [queryParams]="{ cursoId: cursoActual.id }"
+          >
+            <i class="bi bi-journal-plus me-2"></i> Inscribirme ahora
+          </a>
+        </div>
+      </div>
+    </div>
+  }
+</div>

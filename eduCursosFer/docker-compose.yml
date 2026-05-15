@@ -1,0 +1,107 @@
+services:
+  frontend:
+    build:
+      context: ./cursos
+    container_name: educursos-frontend
+    environment:
+      PORT: 4000
+      COURSES_SERVICE_URL: http://courses-service:3001
+      ENROLLMENTS_SERVICE_URL: http://enrollments-service:3002
+      CONTACT_SERVICE_URL: http://contact-service:3003
+    depends_on:
+      - courses-service
+      - enrollments-service
+      - contact-service
+    ports:
+      - '4000:4000'
+
+  courses-service:
+    build:
+      context: ./microservices/courses-service
+    container_name: educursos-courses-service
+    environment:
+      PORT: 3001
+      DB_HOST: courses-db
+      DB_PORT: 5432
+      DB_USER: educursos
+      DB_PASSWORD: educursos123
+      DB_NAME: courses_db
+    depends_on:
+      - courses-db
+    ports:
+      - '3001:3001'
+
+  courses-db:
+    image: postgres:16-alpine
+    container_name: educursos-courses-db
+    environment:
+      POSTGRES_DB: courses_db
+      POSTGRES_USER: educursos
+      POSTGRES_PASSWORD: educursos123
+    ports:
+      - '5433:5432'
+    volumes:
+      - courses-db-data:/var/lib/postgresql/data
+
+  enrollments-service:
+    build:
+      context: ./microservices/enrollments-service
+    container_name: educursos-enrollments-service
+    environment:
+      PORT: 3002
+      DB_HOST: enrollments-db
+      DB_PORT: 5432
+      DB_USER: educursos
+      DB_PASSWORD: educursos123
+      DB_NAME: enrollments_db
+      COURSES_SERVICE_URL: http://courses-service:3001
+    depends_on:
+      - enrollments-db
+      - courses-service
+    ports:
+      - '3002:3002'
+
+  enrollments-db:
+    image: postgres:16-alpine
+    container_name: educursos-enrollments-db
+    environment:
+      POSTGRES_DB: enrollments_db
+      POSTGRES_USER: educursos
+      POSTGRES_PASSWORD: educursos123
+    ports:
+      - '5434:5432'
+    volumes:
+      - enrollments-db-data:/var/lib/postgresql/data
+
+  contact-service:
+    build:
+      context: ./microservices/contact-service
+    container_name: educursos-contact-service
+    environment:
+      PORT: 3003
+      DB_HOST: contact-db
+      DB_PORT: 5432
+      DB_USER: educursos
+      DB_PASSWORD: educursos123
+      DB_NAME: contact_db
+    depends_on:
+      - contact-db
+    ports:
+      - '3003:3003'
+
+  contact-db:
+    image: postgres:16-alpine
+    container_name: educursos-contact-db
+    environment:
+      POSTGRES_DB: contact_db
+      POSTGRES_USER: educursos
+      POSTGRES_PASSWORD: educursos123
+    ports:
+      - '5435:5432'
+    volumes:
+      - contact-db-data:/var/lib/postgresql/data
+
+volumes:
+  courses-db-data:
+  enrollments-db-data:
+  contact-db-data:

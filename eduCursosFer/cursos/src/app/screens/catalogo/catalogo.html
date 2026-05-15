@@ -1,0 +1,54 @@
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold">CatÃ¡logo de Microcursos</h2>
+    <p class="text-muted">Encuentra el programa ideal para impulsar tu carrera</p>
+  </div>
+
+  <div class="row mb-5 g-3">
+    <div class="col-md-8">
+      <div class="input-group shadow-sm">
+        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+        <input
+          type="text"
+          class="form-control border-start-0 form-control-lg"
+          placeholder="Buscar curso por nombre o tecnologÃ­a..."
+          name="terminoBusqueda"
+          [(ngModel)]="terminoBusqueda"
+          (ngModelChange)="cargarCursos()"
+        >
+      </div>
+    </div>
+    <div class="col-md-4">
+      <select
+        class="form-select form-select-lg shadow-sm"
+        name="categoriaSeleccionada"
+        [(ngModel)]="categoriaSeleccionada"
+        (ngModelChange)="cargarCursos()"
+      >
+        <option value="">Todas las categorÃ­as</option>
+        <option *ngFor="let categoria of categorias()" [value]="categoria">{{ categoria }}</option>
+      </select>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger shadow-sm mb-4">{{ error() }}</div>
+  }
+
+  @if (cargando()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="text-muted mt-3 mb-0">Cargando cursos...</p>
+    </div>
+  } @else if (cursos().length === 0) {
+    <div class="alert alert-light border shadow-sm text-center py-4">
+      No encontramos cursos con esos filtros.
+    </div>
+  } @else {
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4" *ngFor="let cursoItem of cursos()">
+        <app-curso-card [curso]="cursoItem"></app-curso-card>
+      </div>
+    </div>
+  }
+</div>

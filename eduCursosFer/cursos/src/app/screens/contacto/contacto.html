@@ -1,0 +1,52 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      
+      <div class="text-center mb-4">
+        <h2 class="fw-bold">ContÃ¡ctanos</h2>
+        <p class="text-muted">Â¿Tienes dudas o sugerencias? EscrÃ­benos y te responderemos a la brevedad.</p>
+      </div>
+
+      @if (mensajeEnviado()) {
+        <div class="alert alert-success d-flex align-items-center shadow-sm mb-4" role="alert">
+          <i class="bi bi-check-circle-fill fs-4 me-3"></i>
+          <div>
+            <strong>Â¡Mensaje enviado con Ã©xito!</strong> Nuestro equipo se pondrÃ¡ en contacto contigo muy pronto.
+          </div>
+        </div>
+      }
+
+      @if (error()) {
+        <div class="alert alert-danger shadow-sm mb-4">{{ error() }}</div>
+      }
+
+      <div class="card shadow border-0 p-4 bg-white">
+        <form #contactoForm="ngForm" (ngSubmit)="enviarMensaje(contactoForm)" [class.was-validated]="contactoForm.submitted">
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold">Nombre Completo *</label>
+            <input type="text" class="form-control" name="nombre" ngModel required placeholder="Ej. Juan PÃ©rez">
+            <div class="invalid-feedback">Por favor ingresa tu nombre.</div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold">Email *</label>
+            <input type="email" class="form-control" name="correo" ngModel required email placeholder="tu@correo.com">
+            <div class="invalid-feedback">Por favor ingresa un correo electrÃ³nico vÃ¡lido.</div>
+          </div>
+          
+          <div class="mb-4">
+            <label class="form-label fw-bold">Mensaje *</label>
+            <textarea class="form-control" rows="5" name="mensaje" ngModel required placeholder="Escribe tu mensaje aquÃ­..."></textarea>
+            <div class="invalid-feedback">El mensaje no puede estar vacÃ­o.</div>
+          </div>
+          
+          <button type="submit" class="btn btn-dark w-100 fw-bold py-2 shadow-sm" [disabled]="enviando()">
+            <i class="bi bi-send-fill me-2"></i> {{ enviando() ? 'Enviando...' : 'Enviar Mensaje' }}
+          </button>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>

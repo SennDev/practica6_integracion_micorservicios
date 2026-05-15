@@ -1,0 +1,23 @@
+<div class="modal fade" id="cancelarModal" tabindex="-1" aria-labelledby="cancelarModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-danger text-white border-0">
+        <h5 class="modal-title fw-bold" id="cancelarModalLabel">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i> Confirmar CancelaciÃ³n
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body py-4 text-center">
+        <p class="mb-0 fs-5">Â¿EstÃ¡s seguro de que deseas cancelar tu inscripciÃ³n a este curso?</p>
+        @if (cursoNombre) {
+          <p class="fw-bold mt-3 mb-0">{{ cursoNombre }}</p>
+        }
+        <p class="text-muted small mt-2">Esta acciÃ³n no se puede deshacer.</p>
+      </div>
+      <div class="modal-footer border-0 bg-light justify-content-center">
+        <button type="button" class="btn btn-secondary fw-bold px-4" data-bs-dismiss="modal">No, mantener</button>
+        <button type="button" class="btn btn-danger fw-bold px-4" data-bs-dismiss="modal" (click)="confirmar.emit()">SÃ­, cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
