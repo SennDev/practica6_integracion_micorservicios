@@ -1,0 +1,22 @@
+{
+  "/api/menu": {
+    "target": "http://localhost:4430",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api/orders": {
+    "target": "http://localhost:4431",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api/reservations": {
+    "target": "http://localhost:4432",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api/contact": {
+    "target": "http://localhost:4433",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

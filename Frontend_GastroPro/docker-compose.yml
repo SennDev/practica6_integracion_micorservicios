@@ -1,0 +1,91 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    depends_on:
+      - menu-service
+      - orders-service
+      - reservations-service
+      - restaurant-contact-service
+    ports:
+      - "4304:80"
+
+  menu-service:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    working_dir: /app
+    command: ["node", "services/menu-service.js"]
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/gastropro_microservices
+      PORT: "3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "4430:3000"
+
+  orders-service:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    working_dir: /app
+    command: ["node", "services/orders-service.js"]
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/gastropro_microservices
+      PORT: "3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "4431:3000"
+
+  reservations-service:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    working_dir: /app
+    command: ["node", "services/reservations-service.js"]
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/gastropro_microservices
+      PORT: "3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "4432:3000"
+
+  restaurant-contact-service:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    working_dir: /app
+    command: ["node", "services/restaurant-contact-service.js"]
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/gastropro_microservices
+      PORT: "3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "4433:3000"
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: gastropro_microservices
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5404:5432"
+    volumes:
+      - gastropro_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d gastropro_microservices"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  gastropro_db_data:
