@@ -1,0 +1,75 @@
+<div class="app-container">
+  <div class="carrito-container">
+    <div class="container">
+      <div class="carrito-header">
+        <h1 class="carrito-title">Tu Carrito</h1>
+
+        <a routerLink="/" class="btn-primary">
+          Continuar Comprando
+        </a>
+      </div>
+
+      <div *ngIf="cartItems.length === 0" class="carrito-empty">
+        <p>Tu carrito esta vacio</p>
+        <a routerLink="/" class="btn-primary">
+          Ir a comprar
+        </a>
+      </div>
+
+      <div *ngIf="cartItems.length > 0" class="carrito-content">
+        <div class="carrito-items">
+          <div *ngFor="let item of cartItems" class="carrito-item">
+            <img [src]="item.image" [alt]="item.name" />
+
+            <div class="carrito-item-info">
+              <h3>{{ item.name }}</h3>
+              <p>${{ item.price | number:'1.2-2' }}</p>
+              <p>Cantidad: {{ item.quantity }}</p>
+            </div>
+
+            <div class="carrito-item-actions">
+              <p class="carrito-item-total">
+                ${{ item.price * item.quantity | number:'1.2-2' }}
+              </p>
+
+              <button (click)="removeItem(item.productId)" class="btn-remove">
+                X
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="carrito-summary">
+          <h2>Resumen de Compra</h2>
+
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span>${{ subtotal | number:'1.2-2' }}</span>
+          </div>
+
+          <div class="summary-row">
+            <span>Envio:</span>
+            <span>${{ envio | number:'1.2-2' }}</span>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <div class="summary-total">
+            <span>Total:</span>
+            <span>${{ total | number:'1.2-2' }}</span>
+          </div>
+
+          <button class="btn-primary" (click)="clearCart()">
+            Finalizar Compra
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 TiendaTech. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+</div>

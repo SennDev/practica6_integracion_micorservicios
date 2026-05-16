@@ -1,0 +1,50 @@
+<nav class="navbar-tienda">
+  <div class="container">
+    <div class="navbar-content">
+
+      <a routerLink="/" class="navbar-brand">
+        TiendaTech
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="navbar-menu-desktop">
+        <a routerLink="/" class="nav-link">
+          Productos
+        </a>
+
+        <a href="#contacto" class="nav-link">
+          Contacto
+        </a>
+
+        <a routerLink="/carrito" class="nav-link nav-link-cart">
+          🛒 Carrito
+        </a>
+      </div>
+
+      <!-- Mobile Toggle -->
+      <button
+        class="navbar-toggle"
+        (click)="toggleMenu()"
+        aria-label="Toggle menu">
+        ☰
+      </button>
+
+    </div>
+
+    <!-- Mobile Menu -->
+    <div *ngIf="isMenuOpen" class="navbar-menu-mobile">
+      <a routerLink="/" class="nav-link-mobile" (click)="toggleMenu()">
+        Productos
+      </a>
+
+      <a href="#contacto" class="nav-link-mobile" (click)="toggleMenu()">
+        Contacto
+      </a>
+
+      <a routerLink="/carrito" class="nav-link-mobile" (click)="toggleMenu()">
+        🛒 Carrito
+      </a>
+    </div>
+
+  </div>
+</nav>

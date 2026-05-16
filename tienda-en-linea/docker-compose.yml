@@ -1,0 +1,89 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: tienda-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - producto-service
+      - carrito-service
+      - contacto-service
+    networks:
+      - tienda-network
+
+  producto-service:
+    build:
+      context: ./microservicios/producto-service
+    container_name: producto-service
+    environment:
+      PORT: 3001
+      MONGO_URI: mongodb://productos-db:27017/productos_db
+    ports:
+      - "3001:3001"
+    depends_on:
+      - productos-db
+    networks:
+      - tienda-network
+
+  carrito-service:
+    build:
+      context: ./microservicios/carrito-service
+    container_name: carrito-service
+    environment:
+      PORT: 3002
+      MONGO_URI: mongodb://carrito-db:27017/carrito_db
+      DEFAULT_CART_ID: principal
+    ports:
+      - "3002:3002"
+    depends_on:
+      - carrito-db
+    networks:
+      - tienda-network
+
+  contacto-service:
+    build:
+      context: ./microservicios/contacto-service
+    container_name: contacto-service
+    environment:
+      PORT: 3003
+      MONGO_URI: mongodb://contacto-db:27017/contacto_db
+    ports:
+      - "3003:3003"
+    depends_on:
+      - contacto-db
+    networks:
+      - tienda-network
+
+  productos-db:
+    image: mongo:7
+    container_name: productos-db
+    volumes:
+      - productos-data:/data/db
+    networks:
+      - tienda-network
+
+  carrito-db:
+    image: mongo:7
+    container_name: carrito-db
+    volumes:
+      - carrito-data:/data/db
+    networks:
+      - tienda-network
+
+  contacto-db:
+    image: mongo:7
+    container_name: contacto-db
+    volumes:
+      - contacto-data:/data/db
+    networks:
+      - tienda-network
+
+networks:
+  tienda-network:
+    driver: bridge
+
+volumes:
+  productos-data:
+  carrito-data:
+  contacto-data:
