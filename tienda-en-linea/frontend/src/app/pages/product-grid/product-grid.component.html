@@ -1,0 +1,15 @@
+<section id="productos" class="products-section">
+  <div class="container">
+    <h2 class="products-title">Nuestros Productos</h2>
+
+    <div class="grid">
+      <app-product-card
+        *ngFor="let product of products"
+        [name]="product.name"
+        [price]="product.price"
+        [image]="product.image"
+        (add)="addToCart(product)">
+      </app-product-card>
+    </div>
+  </div>
+</section>

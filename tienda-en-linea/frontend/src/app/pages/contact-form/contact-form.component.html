@@ -1,0 +1,27 @@
+<section id="contacto">
+  <h2 class="contact-title">Contactanos</h2>
+  <h3 class="contact-subtitle">Tienes alguna pregunta? Estamos aqui para ayudarte</h3>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <input
+      type="text"
+      placeholder="Nombre"
+      formControlName="nombre"
+    />
+
+    <input
+      type="email"
+      placeholder="Correo"
+      formControlName="email"
+    />
+
+    <textarea
+      placeholder="Mensaje"
+      formControlName="mensaje">
+    </textarea>
+
+    <button type="submit" class="btn-primary">
+      Enviar
+    </button>
+  </form>
+</section>

@@ -1,0 +1,8 @@
+<div class="card">
+  <img [src]="image" [alt]="name">
+  <h3>{{ name }}</h3>
+  <p>${{ price | number:'1.2-2' }}</p>
+  <button class="btn-primary" (click)="add.emit()">
+    Agregar al carrito
+  </button>
+</div>

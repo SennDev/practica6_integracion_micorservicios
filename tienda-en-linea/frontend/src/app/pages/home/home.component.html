@@ -1,0 +1,26 @@
+<div class="app-container">
+
+  <app-alert
+    *ngIf="alert"
+    [message]="alert.message"
+    [type]="alert.type"
+    (close)="closeAlert()">
+  </app-alert>
+
+  <app-hero></app-hero>
+
+  <app-product-grid
+    (showAlert)="showAlert($event.message, $event.type)">
+  </app-product-grid>
+
+  <app-contact-form
+    (showAlert)="showAlert($event.message, $event.type)">
+  </app-contact-form>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 TiendaTech. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+</div>
