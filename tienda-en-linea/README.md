@@ -1,6 +1,6 @@
 # Practica 6 - Tienda en Linea
 
-Este proyecto integra el frontend Angular de la tienda con una arquitectura de microservicios, bases de datos persistentes y despliegue con Docker Compose.
+Esta practica integra el frontend Angular de la tienda con una arquitectura de microservicios, bases de datos persistentes y despliegue con Docker Compose.
 
 ## Arquitectura
 
