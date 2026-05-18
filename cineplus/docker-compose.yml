@@ -1,0 +1,133 @@
+services:
+  frontend:
+    build: ./frontend
+    container_name: cineplus-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - movies-service
+      - showtimes-service
+      - seats-service
+      - purchases-service
+
+  movies-service:
+    build: ./services/movies-service
+    container_name: cineplus-movies-service
+    environment:
+      PORT: 3000
+      DB_HOST: movies-db
+      DB_PORT: 5432
+      DB_NAME: movies_db
+      DB_USER: cineplus
+      DB_PASSWORD: cineplus
+    depends_on:
+      movies-db:
+        condition: service_healthy
+
+  movies-db:
+    image: postgres:16-alpine
+    container_name: cineplus-movies-db
+    environment:
+      POSTGRES_DB: movies_db
+      POSTGRES_USER: cineplus
+      POSTGRES_PASSWORD: cineplus
+    volumes:
+      - movies_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cineplus -d movies_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  showtimes-service:
+    build: ./services/showtimes-service
+    container_name: cineplus-showtimes-service
+    environment:
+      PORT: 3000
+      DB_HOST: showtimes-db
+      DB_PORT: 5432
+      DB_NAME: showtimes_db
+      DB_USER: cineplus
+      DB_PASSWORD: cineplus
+    depends_on:
+      showtimes-db:
+        condition: service_healthy
+
+  showtimes-db:
+    image: postgres:16-alpine
+    container_name: cineplus-showtimes-db
+    environment:
+      POSTGRES_DB: showtimes_db
+      POSTGRES_USER: cineplus
+      POSTGRES_PASSWORD: cineplus
+    volumes:
+      - showtimes_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cineplus -d showtimes_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  seats-service:
+    build: ./services/seats-service
+    container_name: cineplus-seats-service
+    environment:
+      PORT: 3000
+      DB_HOST: seats-db
+      DB_PORT: 5432
+      DB_NAME: seats_db
+      DB_USER: cineplus
+      DB_PASSWORD: cineplus
+    depends_on:
+      seats-db:
+        condition: service_healthy
+
+  seats-db:
+    image: postgres:16-alpine
+    container_name: cineplus-seats-db
+    environment:
+      POSTGRES_DB: seats_db
+      POSTGRES_USER: cineplus
+      POSTGRES_PASSWORD: cineplus
+    volumes:
+      - seats_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cineplus -d seats_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  purchases-service:
+    build: ./services/purchases-service
+    container_name: cineplus-purchases-service
+    environment:
+      PORT: 3000
+      DB_HOST: purchases-db
+      DB_PORT: 5432
+      DB_NAME: purchases_db
+      DB_USER: cineplus
+      DB_PASSWORD: cineplus
+    depends_on:
+      purchases-db:
+        condition: service_healthy
+
+  purchases-db:
+    image: postgres:16-alpine
+    container_name: cineplus-purchases-db
+    environment:
+      POSTGRES_DB: purchases_db
+      POSTGRES_USER: cineplus
+      POSTGRES_PASSWORD: cineplus
+    volumes:
+      - purchases_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cineplus -d purchases_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  movies_data:
+  showtimes_data:
+  seats_data:
+  purchases_data:

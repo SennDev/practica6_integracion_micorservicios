@@ -1,0 +1,111 @@
+<main class="shell">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">CinePlus</p>
+      <h1>Cartelera, funciones, asientos y boletos conectados a microservicios.</h1>
+      <p class="hero-copy">La compra completa consulta APIs reales: peliculas, horarios, disponibilidad de asientos, reservas y generacion de boletos.</p>
+    </div>
+    <button type="button" class="ghost-button" (click)="refreshAll()">Actualizar datos</button>
+  </section>
+
+  <section class="status" [class.loading]="loading">
+    {{ statusMessage }}
+  </section>
+
+  <section class="toolbar">
+    <label for="genre">Genero</label>
+    <select id="genre" [(ngModel)]="selectedGenre" (change)="applyGenreFilter()">
+      <option *ngFor="let genre of genres" [value]="genre">{{ genre }}</option>
+    </select>
+  </section>
+
+  <section class="movie-grid" aria-label="Cartelera">
+    <article class="movie-card" *ngFor="let movie of filteredMovies" [class.selected]="selectedMovie?.id === movie.id">
+      <img [src]="movie.poster" [alt]="movie.name">
+      <div class="movie-body">
+        <span>{{ movie.genre }} · {{ movie.duration }} min</span>
+        <h2>{{ movie.name }}</h2>
+        <p>{{ movie.synopsis }}</p>
+        <div class="movie-actions">
+          <strong>{{ movie.base_price | currency:'MXN':'symbol-narrow' }}</strong>
+          <button type="button" (click)="selectMovie(movie)">Elegir</button>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="workspace">
+    <div class="panel">
+      <h2>1. Selecciona una funcion</h2>
+      <div class="empty" *ngIf="!selectedMovie">Primero elige una pelicula de la cartelera.</div>
+      <div class="showtime-list" *ngIf="selectedMovie">
+        <button
+          type="button"
+          *ngFor="let showtime of showtimes"
+          [class.active]="selectedShowtime?.id === showtime.id"
+          (click)="selectShowtime(showtime)">
+          <span>{{ showtime.show_date | date:'dd/MM/yyyy':'UTC' }}</span>
+          <strong>{{ showtime.show_time }}</strong>
+          <small>{{ showtime.room }}</small>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>2. Selecciona asientos</h2>
+      <div class="screen">Pantalla</div>
+      <div class="empty" *ngIf="!selectedShowtime">Elige una funcion para ver disponibilidad real.</div>
+      <div class="seat-grid" *ngIf="selectedShowtime">
+        <button
+          type="button"
+          *ngFor="let seat of seats"
+          [class.occupied]="seat.occupied"
+          [class.chosen]="selectedSeats.includes(seat.seat)"
+          [disabled]="seat.occupied"
+          (click)="toggleSeat(seat)">
+          {{ seat.seat }}
+        </button>
+      </div>
+    </div>
+
+    <div class="panel checkout">
+      <h2>3. Carrito y compra</h2>
+      <div class="cart-line">
+        <span>Pelicula</span>
+        <strong>{{ selectedMovie?.name || 'Sin seleccionar' }}</strong>
+      </div>
+      <div class="cart-line">
+        <span>Asientos</span>
+        <strong>{{ selectedSeats.length ? selectedSeats.join(', ') : 'Sin asientos' }}</strong>
+      </div>
+      <div class="cart-line">
+        <span>Subtotal</span>
+        <strong>{{ subtotal | currency:'MXN':'symbol-narrow' }}</strong>
+      </div>
+      <div class="coupon-row">
+        <input type="text" placeholder="Cupon" [(ngModel)]="coupon">
+        <button type="button" class="secondary" (click)="validateCoupon()">Validar</button>
+      </div>
+      <button type="button" class="primary" (click)="confirmPurchase()" [disabled]="loading">Comprar boletos</button>
+    </div>
+  </section>
+
+  <section class="tickets" *ngIf="tickets.length">
+    <h2>Boletos generados</h2>
+    <article *ngFor="let ticket of tickets">
+      <span>{{ ticket.seat }}</span>
+      <strong>{{ ticket.ticket_code }}</strong>
+    </article>
+  </section>
+
+  <section class="contact">
+    <h2>Contacto</h2>
+    <form (ngSubmit)="sendContact()">
+      <input type="text" placeholder="Nombre">
+      <input type="email" placeholder="Correo">
+      <textarea placeholder="Mensaje"></textarea>
+      <button type="submit" class="secondary">Enviar</button>
+    </form>
+    <p *ngIf="contactMessage">{{ contactMessage }}</p>
+  </section>
+</main>
